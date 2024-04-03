@@ -26,6 +26,12 @@ function App() {
     const updatedValues = [...inputValues];
     updatedValues[index] = value;
     setInputValues(updatedValues);
+
+    if (index < 3 && value !== '') {
+      document.querySelectorAll('input')[index + 1].focus();
+    } else if (index === 3 && value !== '') {
+      submitButtonRef.current.focus();
+    }
   };
 
   const handleChallengeSubmit = () => {
@@ -67,7 +73,13 @@ function App() {
               />
             ))}
           </div>
-          <button onClick={handleChallengeSubmit} disabled={currentChallenge === challenges.length}>Submit</button>
+          <button
+            ref={submitButtonRef}
+            onClick={handleChallengeSubmit}
+            disabled={currentChallenge === challenges.length}
+          >
+            Submit
+          </button>
         </div>
       </div>
     </div>
