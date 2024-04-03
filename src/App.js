@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import challenges from './challengesData';
 
@@ -6,6 +6,20 @@ function App() {
   const [currentChallenge, setCurrentChallenge] = useState(0);
   const [inputValues, setInputValues] = useState(['', '', '', '']);
   const [message, setMessage] = useState('');
+  const submitButtonRef = useRef(null);
+
+  useEffect(() => {
+    const focusInput = (index) => {
+      if (index < 4) {
+        document.querySelectorAll('input')[index].focus();
+      } else {
+        submitButtonRef.current.focus();
+      }
+    };
+
+    focusInput(0);
+  }, []);
+
 
   const handleInputChange = (e, index) => {
     const value = e.target.value.replace(/\D/g, ''); // Allow only numbers
