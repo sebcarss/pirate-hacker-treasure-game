@@ -7,18 +7,16 @@ function App() {
   const [inputValues, setInputValues] = useState(['', '', '', '']);
   const [message, setMessage] = useState('');
   const submitButtonRef = useRef(null);
+  const inputRefs = useRef([]);
 
   useEffect(() => {
     const focusInput = (index) => {
-      if (index < 4) {
-        document.querySelectorAll('input')[index].focus();
-      } else {
-        submitButtonRef.current.focus();
-      }
+      inputRefs.current[index].focus();
     };
 
     focusInput(0);
-  }, []);
+  }, [currentChallenge]);
+
 
 
   const handleInputChange = (e, index) => {
@@ -28,7 +26,7 @@ function App() {
     setInputValues(updatedValues);
 
     if (index < 3 && value !== '') {
-      document.querySelectorAll('input')[index + 1].focus();
+      inputRefs.current[index + 1].focus();
     } else if (index === 3 && value !== '') {
       submitButtonRef.current.focus();
     }
@@ -37,7 +35,7 @@ function App() {
   const handleChallengeSubmit = () => {
     const currentChallengeData = challenges[currentChallenge];
     const combinedAnswer = inputValues.join('');
-
+  
     if (combinedAnswer === currentChallengeData.answer) {
       if (currentChallenge === challenges.length - 1) {
         setMessage(`Pirate Hacker: Ahoy! Ye have unlocked the secret location of the treasure: ${currentChallengeData.secretLocation}. Find the treasure and claim yer reward!`);
@@ -48,6 +46,8 @@ function App() {
       }
     } else {
       setMessage(`Pirate Hacker: Ye scurvy dog! Try again, matie!`);
+      setInputValues(['', '', '', '']);
+      inputRefs.current[0].focus();
     }
   };
 
@@ -70,6 +70,7 @@ function App() {
                 pattern="[0-9]*"
                 inputMode="numeric"
                 disabled={currentChallenge === challenges.length}
+                ref={(input) => inputRefs.current.push(input)}
               />
             ))}
           </div>
@@ -85,5 +86,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;
