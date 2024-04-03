@@ -53,6 +53,18 @@ function App() {
 
   return (
     <div className="App">
+      <div className="skull-and-crossbones">
+      <pre>{`
+_.--""--._
+/  _    _ \\
+_  ( (_\\  /_) )  _
+{ \\._\\   /\\   /_./ }
+/_"=-.}______{.-="_\\
+ _  _.=("""")=._  _
+(_'"_.-"\`~~\`"-._"'_)
+ {_"            "_}
+  `}</pre>
+      </div>
       <div className="terminal">
         <div className="terminal-header">
           <span className="terminal-title">Pirate Hacker's Treasure Challenge</span>
